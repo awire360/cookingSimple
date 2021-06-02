@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {% if user.is_authenticated %}
+            <h2>Welcome, {{user.username|title}}</h2>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        {% for recipe in object_list %}
+        <div class="col-4 d-flex justify-content-center">
+            <a href="#">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the
+                            card's content.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
