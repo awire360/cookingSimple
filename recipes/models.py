@@ -1,8 +1,16 @@
 from django.db import models
-from django.db.models.deletion import PROTECT
-from django.conf import settings
+from django.db.models.deletion import CASCADE, PROTECT
+from django.contrib.auth.models import User
 
 # Create your models here.
+def get_recipe_image_filepath(self, filename):
+    return f'recipe_images/{self.pk}/{"recipe_image.png"}'
+
+
+def get_default_recipe_image():
+    return "recipe_images/default/profile.png"
+
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
@@ -10,13 +18,30 @@ class Category(models.Model):
         return self.name
 
 
-class Recipes(models.Model):
-    image = models.ImageField(upload_to="media/")
-    title = models.CharField(max_length=70)
-    category = models.ForeignKey(Category, on_delete=PROTECT)
-    cooking_time = models.TimeField(auto_now=False, auto_now_add=False)
-    body = models.TextField()
-    plain_body = models.TextField()
+class CookingSteps(models.Model):
+    name = models.CharField(max_length=150, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=PROTECT)
+
+
+class Recipes(models.Model):
+    recipe_title = models.CharField(max_length=70)
+    category = models.ForeignKey(Category, on_delete=PROTECT)
+    image = models.ImageField(
+        upload_to=get_recipe_image_filepath,
+        null=False,
+        blank=True,
+        default=get_default_recipe_image,
+    )
+    prep_time_hh = models.SmallIntegerField()
+    prep_time_mm = models.SmallIntegerField()
+    cooking_time_hh = models.SmallIntegerField()
+    cooking_time_mm = models.SmallIntegerField()
+    ingredients = models.TextField(blank=True, null=False)
+    method = models.ForeignKey(CookingSteps, on_delete=CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=PROTECT)
+
+    def get_recipe_image_filepath(self):
+        return str(self.image)[str(self.image).index(f"recipe_images/{self.pk}/") :]

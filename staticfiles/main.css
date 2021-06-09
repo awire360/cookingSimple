@@ -35,7 +35,7 @@
   /* margin-left: 12rem; */
   margin-right: 12rem;
   transition: all 0.4s;
-  min-height: calc(100vh - 5rem);
+  min-height: 100vh;
 }
 .register-overide{
   margin-right: 0rem!important;
@@ -79,7 +79,7 @@ tr.clickable-row {
 body {
   background: #fafafa;
   color: #333333;
-  margin-top: 5rem;
+  /* margin-top: 5rem; */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -189,3 +189,11 @@ a.article-title:hover {
   align-items: center;
   z-index: 1000;
 } */
+.cover {
+  background: url('images/assets/main_cover.jpeg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 15rem;
+}

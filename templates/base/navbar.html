@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-warning">
-  <div class="container-fluid">
+  <div class="container">
     <a class="navbar-brand" href="{% url 'recipes-home' %}">cookingSimple!</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,44 +11,31 @@
           <a class="nav-link active" aria-current="page" href="{% url 'recipes-home' %}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+          <a class="nav-link" href="{% url 'recipes-new' %}">New Recipe</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </li>
       </ul>
       <div class="d-flex">
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
           {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'users-profile' %}">Profile</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Account
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'users-profile' %}">Profile</a></li>
+              {% if user.is_superuser %}
+              <li><a class="dropdown-item" href="/admin">Admin</a></li>
+              {% endif %}
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+            </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'account_logout' %}">Logout</a>
-          </li>
-          {% if user.is_superuser %}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/admin">admin</a>
-          </li>
-          {% endif %}
           {% else %}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'account_login' %}">Login</a>

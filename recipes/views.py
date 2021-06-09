@@ -31,10 +31,10 @@ class RecipesDetailView(DetailView):
 
 class RecipesCreateView(CreateView):
     model = Recipes
-    fields = ['image','title','cooking_time','body']
+    form_class = RecipesCreateForm
 
     def get(self, request, *args, **kwargs):
-        context = {'form': RecipesCreateForm()}
+        context = {'form': self.form_class}
         return render(request, "recipes/recipes_form.html", context)
     
     def post(self, request, *args, **kwargs):

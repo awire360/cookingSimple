@@ -10,6 +10,6 @@ from .views import (
 
 urlpatterns = [
     path("", RecipesListView.as_view(), name="recipes-home"),
-    path("recipes/<int:pk>/", RecipesDetailView.as_view(), name="recipes-detail"),
-    path("recipes/new/", RecipesCreateFormView.as_view(), name="recipes-new"),
+    path("<int:pk>/", RecipesDetailView.as_view(), name="recipes-detail"),
+    path("new/", RecipesCreateFormView.as_view(), name="recipes-new"),
 ]

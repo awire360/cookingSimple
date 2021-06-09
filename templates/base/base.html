@@ -23,12 +23,25 @@
 
 <body>
   {% include 'base/navbar.html' %}
-  {% if request.get_full_path != register_url %}
+  <!-- {% if request.get_full_path != register_url %}
   <div class="right-sidebar">
     <p>Test</p>
   </div>
-  {% endif %}
-  <div class="page-content {% if request.get_full_path == signup_url or login_url %}register-overide{% endif %}">
+  {% endif %} -->
+  <div
+    class="page-content register-overide {% if request.get_full_path == signup_url or login_url %}register-overide{% endif %}">
+    <!-- Page header with logo and tagline-->
+    <header class="py-5 bg-light border-bottom mb-4 cover">
+      <div class="container">
+        <!-- <div class="col-4 ">
+          <div class="text-center my-5 bg-white shadow border-lg rounded">
+            <h1 class="fw-bolder">Welcome to cookingSimple.uk</h1>
+            <p class="lead mb-0"></p>
+          </div>
+        </div> -->
+      </div>
+    </header>
+
     <div class="container">
       <div class="row d-flex justify-content-center">
         <div class="col-8">
