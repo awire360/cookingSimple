@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Recipes
@@ -16,7 +17,15 @@ class RecipesCreateFormView(FormView):
     template_name = "recipes/recipes_form.html"
     success_url = '/recipes/success'
 
+    
+    def get_context_data(self, **kwargs):
+        context = super(RecipesCreateForm, self).get_context_data(**kwargs)
+        context['cookingsteps'] = 
+        return context
+    
+
     def form_valid(self, form) -> HttpResponse:
+
         form.save()
         return super().form_valid(form)
 

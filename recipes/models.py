@@ -13,16 +13,19 @@ def get_default_recipe_image():
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return self.name
 
-
 class CookingSteps(models.Model):
-    name = models.CharField(max_length=150, blank=False, null=False)
+    step = models.CharField(max_length=150, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f'Cooking steps for {self.recipes}'
 
 class Recipes(models.Model):
     recipe_title = models.CharField(max_length=70)
@@ -38,10 +41,12 @@ class Recipes(models.Model):
     cooking_time_hh = models.SmallIntegerField()
     cooking_time_mm = models.SmallIntegerField()
     ingredients = models.TextField(blank=True, null=False)
-    method = models.ForeignKey(CookingSteps, on_delete=CASCADE)
+    cooking_steps = models.TextField(max_length=4000, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=PROTECT)
 
     def get_recipe_image_filepath(self):
         return str(self.image)[str(self.image).index(f"recipe_images/{self.pk}/") :]
+
+
