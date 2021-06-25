@@ -48,8 +48,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    'corsheaders',
-    'rest_framework',
     # My Apps
     "recipes",
     "users",
@@ -59,6 +57,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -174,6 +173,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 LOGIN_REDIRECT_URL = "recipes-home"
 LOGOUT_REDIRECT_URL = "recipes-home"
 
-CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
-]
+# CORS_ORIGIN_WHITELIST = [
+#      'http://localhost:3000'
+# ]

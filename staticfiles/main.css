@@ -174,9 +174,9 @@ a.article-title:hover {
 .bi {
   font-size: 1.5rem;
 }
-.form-select {
+/* .form-select {
   max-width: 8.5rem;
-}
+} */
 /* .loader-wrapper {
   width: 100vw;
   height: 100vh;
@@ -196,4 +196,9 @@ a.article-title:hover {
   -o-background-size: cover;
   background-size: cover;
   min-height: 15rem;
+}
+
+a.custom-card,
+a.custom-card:hover {
+  color: inherit;
 }

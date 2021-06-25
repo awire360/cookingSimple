@@ -7,24 +7,26 @@
         <div class="col">
             {% if user.is_authenticated %}
             <h2>Welcome, {{user.username|title}}</h2>
+            {% else %}
+            <h2>Welcome to CookingSimple.uk</h2>
             {% endif %}
         </div>
     </div>
-    <div class="row">
+    {% if object_list %}
+    <div class="row g-3 mb-5">
         {% for recipe in object_list %}
         <div class="col-4 d-flex justify-content-center">
-            <a href="#">
                 <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src="{{recipe.image.url}}" class="card-img-top" alt="..." width="286" height="259">
                     <div class="card-body">
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the
-                            card's content.</p>
+                        <h5 class="card-title">{{recipe.title}}</h5>
+                        <!-- <p class="card-text">{{recipe.cooking_steps|linebreaks}}</p> -->
+                        <a href="#" class="stretched-link"></a>
                     </div>
                 </div>
-            </a>
         </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 {% endblock content %}
