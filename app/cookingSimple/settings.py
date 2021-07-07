@@ -171,7 +171,3 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 LOGIN_REDIRECT_URL = "recipes-home"
 LOGOUT_REDIRECT_URL = "recipes-home"
-
-# CORS_ORIGIN_WHITELIST = [
-#      'http://localhost:3000'
-# ]
