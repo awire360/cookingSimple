@@ -37,6 +37,7 @@ class Recipes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=PROTECT)
+    favourites = models.ManyToManyField(User, related_name='favourite', default=None, blank=True)
 
     def get_recipe_image_filepath(self):
         return str(self.image)[str(self.image).index(f"recipe_images/{self.pk}/") :]

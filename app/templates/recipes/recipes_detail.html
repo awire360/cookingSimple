@@ -2,5 +2,35 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-    <p>This is working</p>
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-11 bg-white border rounded shadow m-2 p-4">
+            <div class="row">
+                <div class="col-11 d-flex">
+                    <img src="{{recipe.image.url}}" class="img-thumbnail rounded" alt="..." width="286" height="259">
+                    <h1 class="ps-3">{{recipe.title}}</h1>
+                </div>
+                <div class="col">
+                    {% if fav %}
+                    <a href="{% url 'favourite-add' recipe.id %}" class="float-end text-danger"><i class="bi bi-heart-fill"></i></a>
+                    {% else %}
+                    <a href="{% url 'favourite-add' recipe.id %}" class="float-end text-danger"><i class="bi bi-heart"></i></a>
+                    {% endif %} 
+                </div>
+            </div>
+            <div class="row pt-4 pb-4">
+                <div class="col">
+                    <h3>Ingredients</h3>
+                    <p>{{recipe.ingredients|linebreaks}}</p>
+                </div>
+            </div>
+            <div class="row pt-4 pb-4">
+                <div class="col">
+                    <h3>Method</h3>
+                    <p>{{recipe.cooking_steps|linebreaks}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

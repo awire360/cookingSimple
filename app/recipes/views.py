@@ -1,5 +1,7 @@
 from typing import Any, Dict
-from django.shortcuts import render, redirect
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, redirect 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.urls.base import reverse_lazy
 from .models import Recipes, Category
@@ -13,11 +15,22 @@ from django.urls import reverse
 # Create your views here.
 class RecipesListView(ListView):
     model = Recipes
+    paginate_by = 20
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        context['fav'] = Recipes.objects.filter()
+        return context
+
+class MyRecipesListView(ListView):
+    model = Recipes
+    paginate_by = 20
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all()
         return context
-    
+    def get_queryset(self):
+        return Recipes.objects.filter(author=self.request.user).order_by('-updated_at')
 
 class RecipesCreateFormView(FormView):
     form_class = RecipesCreateForm
@@ -37,8 +50,30 @@ class FormSuccessView(View):
     def get(self, request, *args, **kwargs):
         return HttpResponse("Recipe saved successfully")
 
-class RecipesDetailView(DetailView):
-    model = Recipes
+# class RecipesDetailView(DetailView):
+#     model = Recipes
+#     fav = bool
+#     context = dict
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['fav'] = self.fav
+#         return context
+
+#     def get(self, request, *args, **kwargs) -> HttpResponse:
+#         recipe = get_object_or_404(Recipes, id=request.pk)
+#         if recipe.favourites.filter(pk=request.user.id).exists():
+#             self.fav = True
+#         return render(request, "recipes/recipes_detail.html", self.context)
+def recipeDetailView(request, pk):
+    recipe = get_object_or_404(Recipes, pk=pk)
+    fav = bool
+    if recipe.favourites.filter(pk=request.user.id).exists():
+        fav = True
+    context = {
+        'recipe': recipe,
+        'fav': fav
+    }
+    return render(request, "recipes/recipes_detail.html", context)
 
 class RecipesCreateView(CreateView):
     model = Recipes
@@ -54,3 +89,12 @@ class RecipesCreateView(CreateView):
             recipe = form.save()
             recipe.save()
             return redirect()
+
+@login_required
+def favourite_add(request, pk):
+    recipe = get_object_or_404(Recipes, pk=pk)
+    if recipe.favourites.filter(pk=request.user.id).exists():
+        recipe.favourites.remove(request.user)
+    else:
+        recipe.favourites.add(request.user)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
