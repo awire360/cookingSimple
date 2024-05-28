@@ -1,19 +1,11 @@
 from django.urls import path, include
-from .views import (
-    RecipesCreateFormView,
-    RecipesListView,
-    MyRecipesListView,
-    # RecipesDetailView,
-    RecipesCreateView,
-    RecipesCreateFormView,
-    FormSuccessView,
-    recipeDetailView,
-)
+from recipes import views
 
 urlpatterns = [
-    path("", RecipesListView.as_view(), name="recipes-home"),
-    path("<int:pk>/", recipeDetailView, name="recipes-detail"),
-    path("new/", RecipesCreateFormView.as_view(), name="recipes-new"),
-    path("my-recipes/", MyRecipesListView.as_view(), name="recipes-my"),
+    # path("", views.RecipeListView.as_view(), name="recipes-home"),
+    path("", views.recipeListView, name="recipes-home"),
+    path("<int:pk>/", views.recipeDetailView, name="recipes-detail"),
+    path("new/", views.RecipeCreateForm, name="recipes-new"),
+    path("my-recipes/", views.MyRecipeListView.as_view(), name="recipes-my"),
 
 ]

@@ -4,3 +4,4 @@ static
 htmlcov
 .DS_Store
 .env
+app/db.sqlite3

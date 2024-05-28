@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block title %}New Recipe{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-8">
+            <h4>New Recipe</h4>
+            <div class="bg-white border rounded shadow-sm m-3 p-3">
+                <form hx-post="{% url %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.title|as_crispy_field}}
+                    {{form.image|as_crispy_field}}
+                    <div class="form-group">
+                        {{form.category|as_crispy_field}}
+                        {{form.servings|as_crispy_field}}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

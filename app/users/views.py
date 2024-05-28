@@ -1,7 +1,7 @@
 from users.forms import ProfileUpdateForm, UserUpdateForm
 from django.contrib.auth.models import User
 from .models import Profile
-from recipes.models import Recipes
+from recipes.models import Recipe
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
@@ -26,12 +26,12 @@ def profile(request):
 
 @login_required
 def favourite_list(request):
-    fav_list = Recipes.objects.filter(favourites=request.user)
+    fav_list = Recipe.objects.filter(favourites=request.user)
     return render(request, 'account/favourites.html', {'fav_list': fav_list})
 
 @login_required
 def favourite_add(request, pk):
-    recipe = get_object_or_404(Recipes, pk=pk)
+    recipe = get_object_or_404(Recipe, pk=pk)
     if recipe.favourites.filter(pk=request.user.id).exists():
         recipe.favourites.remove(request.user)
     else:
